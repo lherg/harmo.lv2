@@ -9,9 +9,9 @@
 @prefix midi: <http://lv2plug.in/ns/ext/midi#> .
 
 
-<https://github.com/lherg/harmo.lv2/tree/main/mySynth> a lv2:Plugin , lv2:OscillatorPlugin , doap:Project ;
-    lv2:binary <mySynth.so> ;
-    doap:name "mySynth" ;
+<https://github.com/sjaehn/lv2tutorial/mySineSynth> a lv2:Plugin , lv2:OscillatorPlugin , doap:Project ;
+    lv2:binary <mySineSynth.so> ;
+    doap:name "mySineSynth" ;
     lv2:optionalFeature lv2:hardRTCapable ;
     lv2:requiredFeature urid:map ;
     lv2:minorVersion 2 ;

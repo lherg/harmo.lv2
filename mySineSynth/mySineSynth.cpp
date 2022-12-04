@@ -154,7 +154,7 @@ inline void Key::proceed ()
 }
 
 /* class definition */
-class mySynth 
+class MySineSynth 
 {
 private:
     const LV2_Atom_Sequence* midi_in_ptr ;
@@ -167,7 +167,7 @@ private:
     Key key;
 
 public:
-    mySynth (const double sample_rate, const LV2_Feature *const *features);
+    MySineSynth (const double sample_rate, const LV2_Feature *const *features);
     void connectPort (const uint32_t port, void* data_location);
     void run (const uint32_t sample_count);
 
@@ -175,7 +175,7 @@ private:
     void play (const uint32_t start, const uint32_t end);
 };
 
-mySynth::mySynth (const double sample_rate, const LV2_Feature *const *features) :
+MySineSynth::MySineSynth (const double sample_rate, const LV2_Feature *const *features) :
     midi_in_ptr (nullptr),
     audio_out_ptr (nullptr),
     control_ptr {nullptr},
@@ -196,7 +196,7 @@ mySynth::mySynth (const double sample_rate, const LV2_Feature *const *features) 
     urids.midi_MidiEvent = map->map (map->handle, LV2_MIDI__MidiEvent);
 }
 
-void mySynth::connectPort (const uint32_t port, void* data_location)
+void MySineSynth::connectPort (const uint32_t port, void* data_location)
 {
     switch (port)
     {
@@ -217,7 +217,7 @@ void mySynth::connectPort (const uint32_t port, void* data_location)
     }
 }
 
-void mySynth::play (const uint32_t start, const uint32_t end)
+void MySineSynth::play (const uint32_t start, const uint32_t end)
 {
     for (uint32_t i = start; i < end; ++i)
     {
@@ -226,7 +226,7 @@ void mySynth::play (const uint32_t start, const uint32_t end)
     }
 }
 
-void mySynth::run (const uint32_t sample_count)
+void MySineSynth::run (const uint32_t sample_count)
 {
     /* check if all ports connected */
     if ((!audio_out_ptr) || (!midi_in_ptr)) return;
@@ -288,13 +288,13 @@ void mySynth::run (const uint32_t sample_count)
 /* internal core methods */
 static LV2_Handle instantiate (const struct LV2_Descriptor *descriptor, double sample_rate, const char *bundle_path, const LV2_Feature *const *features)
 {
-    mySynth* m = new mySynth (sample_rate, features);
+    MySineSynth* m = new MySineSynth (sample_rate, features);
     return m;
 }
 
 static void connect_port (LV2_Handle instance, uint32_t port, void *data_location)
 {
-    mySynth* m = (mySynth*) instance;
+    MySineSynth* m = (MySineSynth*) instance;
     if (m) m->connectPort (port, data_location);
 }
 
@@ -305,7 +305,7 @@ static void activate (LV2_Handle instance)
 
 static void run (LV2_Handle instance, uint32_t sample_count)
 {
-    mySynth* m = (mySynth*) instance;
+    MySineSynth* m = (MySineSynth*) instance;
     if (m) m->run (sample_count);
 }
 
@@ -316,7 +316,7 @@ static void deactivate (LV2_Handle instance)
 
 static void cleanup (LV2_Handle instance)
 {
-    mySynth* m = (mySynth*) instance;
+    MySineSynth* m = (MySineSynth*) instance;
     if (m) delete m;
 }
 
@@ -328,7 +328,7 @@ static const void* extension_data (const char *uri)
 /* descriptor */
 static LV2_Descriptor const descriptor =
 {
-    "https://github.com/sjaehn/lv2tutorial/mySynth",
+    "https://github.com/sjaehn/lv2tutorial/mySineSynth",
     instantiate,
     connect_port,
     activate,
